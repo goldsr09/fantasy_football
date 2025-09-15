@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-3">Leaderboard</h1>
+<p class="small-muted">Scoring from <code>scoring.json</code>.</p>
+<table class="table table-striped align-middle">
+  <thead>
+    <tr><th>Rank</th><th>Name</th><th>Teams</th><th class="text-end">Points</th></tr>
+  </thead>
+  <tbody>
+  {% for row in rows %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>
+        <a href="{{ url_for('main.player_detail', player_name=row.name) }}" class="text-decoration-none fw-bold">
+          {{ row.name }}
+        </a>
+      </td>
+      <td>{{ ", ".join(row.teams) }}</td>
+      <td class="text-end">{{ "%.2f"|format(row.points) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

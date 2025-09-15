@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin</h2>
+
+<form method="post" class="mb-4">
+  <button name="action" value="seed" class="btn btn-sm btn-primary">Seed Picks (first time)</button>
+</form>
+
+<h5>Ingest results (paste JSON)</h5>
+<form method="post" class="mb-3">
+  <div class="row g-2 align-items-end">
+    <div class="col-auto">
+      <label class="form-label">Week</label>
+      <input type="number" min="1" name="week" class="form-control form-control-sm" value="1">
+    </div>
+  </div>
+
+  <div class="mb-2">
+    <textarea name="json_payload" rows="6" class="form-control"
+      placeholder='[{"team":"Lions","result":"W","meta":{"road":false}}, {"team":"Texans","result":"L"}]'></textarea>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="ingest buttons">
+    <button name="action" value="ingest_json" class="btn btn-sm btn-success">Ingest JSON</button>
+    <button name="action" value="fetch_espn" class="btn btn-sm btn-outline-primary">Fetch ESPN</button>
+    <button name="action" value="fetch_stub" class="btn btn-sm btn-outline-secondary">Run Stub Fetch</button>
+    <button name="action" value="wipe_week" class="btn btn-sm btn-outline-danger">Wipe This Week</button>
+  </div>
+</form>
+
+<h5>Latest week snapshot</h5>
+{% if latest_week %}
+  <p class="small-muted">Week {{ latest_week }}</p>
+  <table class="table table-sm">
+    <thead><tr><th>Team</th><th>Result</th><th class="text-end">Points</th></tr></thead>
+    <tbody>
+    {% for r in recent %}
+      <tr>
+        <td>{{ r.team }}</td>
+        <td>{{ r.result }}</td>
+        <td class="text-end">{{ "%.2f"|format(r.points) }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="small-muted">No results yet.</p>
+{% endif %}
+{% endblock %}

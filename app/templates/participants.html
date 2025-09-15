@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Participants & Picks</h2>
+<table class="table table-bordered">
+  <thead><tr><th>Name</th><th>#1</th><th>#2</th><th>#3</th></tr></thead>
+  <tbody>
+  {% for name, picks in table.items() %}
+    <tr>
+      <td><b>{{ name }}</b></td>
+      <td>{{ picks[0] }}</td>
+      <td>{{ picks[1] }}</td>
+      <td>{{ picks[2] }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
