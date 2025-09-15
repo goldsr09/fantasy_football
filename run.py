@@ -1,4 +1,5 @@
 from app import create_app, db
+import os
 
 app = create_app()
 
@@ -6,4 +7,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     # This should start and block (you'll see server logs)
-    app.run(host="0.0.0.0", port=5010)
+    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5010)))
